@@ -1,4 +1,4 @@
-package com.dongyang.basicProject.DTO;
+package com.dongyang.basicProject.dto;
 
 public class ArticleDTO {
     private String title;
