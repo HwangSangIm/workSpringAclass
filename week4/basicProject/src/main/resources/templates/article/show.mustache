@@ -1,0 +1,14 @@
+{{> layouts/header }}
+
+<h1> 상세 글 보기 </h1>
+<div>{{showResult.id}}</div>
+<div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">제목</label>
+    <input readonly value="{{showResult.title}}" type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요.">
+</div>
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+    <textarea readonly name="contents" class="form-control" id="exampleFormControlTextarea1" rows="3">{{showResult.contents}}</textarea>
+</div>
+
+{{> layouts/footer }}

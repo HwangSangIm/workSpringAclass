@@ -1,7 +1,15 @@
 package com.dongyang.basicProject.dto;
 
 import com.dongyang.basicProject.entity.ArticleEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ArticleDTO {
     private String title;
     private String contents;
@@ -10,19 +18,4 @@ public class ArticleDTO {
       return new ArticleEntity(null , title , contents);
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
 }

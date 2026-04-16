@@ -5,22 +5,26 @@ import com.dongyang.basicProject.entity.ArticleEntity;
 import com.dongyang.basicProject.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Optional;
+
+@RequestMapping("/articles/")
 @Controller
 public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
-
-    @GetMapping("/articles/new")
+    @GetMapping("/new")
     public String newArticleForm(){
         return "article/new";
     }
 
-    @PostMapping("/articles/new")
+    @PostMapping("/new")
     public String newArticleForm(ArticleDTO dto){
 //        System.out.println("title: " + dto.getTitle());
 //       System.out.println("contents: " + dto.getContents());
@@ -32,9 +36,10 @@ public class ArticleController {
         return "";
     }
 
-    @GetMapping("/articles/{id}")
-    public String show(@PathVariable("id") Long id){
-        System.out.println("상세글 아이디 : "+id);
-        return "";
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Long id, Model model){
+        ArticleEntity at =articleRepository.findById(id).orElse(null);
+        model.addAttribute("showResult",at);
+        return "article/show";
     }
 }
