@@ -24,5 +24,7 @@
 </div>
 
 <h2> 황상임의 웹사이트에 오신 걸 환영합니다.</h2>
-
+{{# msg}}
+    <script>alert("{{msg}}");</script>
+{{/msg}}
 {{> layouts/footer }}

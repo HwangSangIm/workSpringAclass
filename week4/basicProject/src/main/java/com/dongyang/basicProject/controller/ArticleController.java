@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -32,8 +33,8 @@ public class ArticleController {
         // ArticleEntity ae = new ArticleEntity(null, dto.getTitle(), dto.getContents());
         ArticleEntity ae = dto.toEntity();
         // 2. ArticleRepository의 save( ) 호출
-        articleRepository.save(ae);
-        return "";
+        ArticleEntity result = articleRepository.save(ae);
+        return "redirect:/articles/"+result.getId();
     }
 
     @GetMapping("/{id}")
@@ -41,5 +42,12 @@ public class ArticleController {
         ArticleEntity at =articleRepository.findById(id).orElse(null);
         model.addAttribute("showResult",at);
         return "article/show";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String delete(@PathVariable("id") Long id, RedirectAttributes rt){
+        articleRepository.deleteById(id);
+        rt.addFlashAttribute("msg","삭제되었습니다.");
+        return "redirect:/";
     }
 }
