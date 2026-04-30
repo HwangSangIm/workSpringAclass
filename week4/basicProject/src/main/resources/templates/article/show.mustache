@@ -11,6 +11,10 @@
     <textarea readonly name="contents" class="form-control" id="exampleFormControlTextarea1" rows="3">{{contents}}</textarea>
 </div>
 
-<h1>수정 <a href="/articles/{{id}}/delete">삭제</a> 목록</h1>
+<h1>
+    <a href="/articles/{{id}}/edit">수정</a>
+    <a href="/articles/{{id}}/delete">삭제</a>
+    <a href="/articles/">목록</a>
+</h1>
 {{/showResult}}
 {{> layouts/footer }}

@@ -11,11 +11,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ArticleDTO {
+    private Long id;
     private String title;
     private String contents;
 
     public ArticleEntity toEntity(){
-      return new ArticleEntity(null , title , contents);
+      return new ArticleEntity(id , title , contents);
     }
 
 }

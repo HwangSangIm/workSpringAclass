@@ -12,21 +12,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-@RequestMapping("/articles/")
+@RequestMapping("/articles")
 @Controller
 public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @GetMapping
+    public String index(Model model){
+        List<ArticleEntity> list = (List<ArticleEntity>)articleRepository.findAll();
+        model.addAttribute("list",list);
+        return "article/index";
+    }
+
+
     @GetMapping("/new")
-    public String newArticleForm(){
+    public String newArticleForm() {
         return "article/new";
     }
 
     @PostMapping("/new")
-    public String newArticleForm(ArticleDTO dto){
+    public String newArticleForm(ArticleDTO dto) {
 //        System.out.println("title: " + dto.getTitle());
 //       System.out.println("contents: " + dto.getContents());
         // 1. dto의 값 -> ArticleEntity 객체
@@ -34,20 +44,33 @@ public class ArticleController {
         ArticleEntity ae = dto.toEntity();
         // 2. ArticleRepository의 save( ) 호출
         ArticleEntity result = articleRepository.save(ae);
-        return "redirect:/articles/"+result.getId();
+        return "redirect:/articles/" + result.getId();
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") Long id, Model model){
-        ArticleEntity at =articleRepository.findById(id).orElse(null);
-        model.addAttribute("showResult",at);
+    public String show(@PathVariable("id") Long id, Model model) {
+        ArticleEntity at = articleRepository.findById(id).orElse(null);
+        model.addAttribute("showResult", at);
         return "article/show";
     }
 
     @GetMapping("/{id}/delete")
-    public String delete(@PathVariable("id") Long id, RedirectAttributes rt){
+    public String delete(@PathVariable("id") Long id, RedirectAttributes rt) {
         articleRepository.deleteById(id);
-        rt.addFlashAttribute("msg","삭제되었습니다.");
+        rt.addFlashAttribute("msg", "삭제되었습니다.");
         return "redirect:/";
     }
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") Long id , Model model){
+        ArticleEntity at = articleRepository.findById(id).orElse(null);
+        model.addAttribute("update",at);
+        return "article/edit";
+    }
+    @PostMapping("/update")
+    public String update(ArticleDTO dto){
+        ArticleEntity ae = dto.toEntity();
+        articleRepository.save(ae);
+        return "redirect:/articles";
+    }
+
 }
