@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,4 +22,13 @@ public class ArticleEntity {
     @Column
     private String contents;
 
+    public void patch(ArticleEntity article){
+        if(article.title!=null){
+            this.title = article.title;
+        }
+
+        if(article.contents!=null){
+            this.contents = article.contents;
+        }
+    }
 }

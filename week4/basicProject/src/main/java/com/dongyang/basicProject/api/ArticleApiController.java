@@ -31,4 +31,24 @@ public class ArticleApiController {
         return articleService.index();
     }
 
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity delete(@PathVariable Long id){
+        articleService.delete(id);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @PostMapping("/api/transaction-test")
+    public ResponseEntity transactionTest(@RequestBody List<ArticleDTO> dtos){
+        List<ArticleEntity> articleResult = articleService.createArticles(dtos);
+        return (articleResult != null)?
+                ResponseEntity.status(HttpStatus.OK).body(articleResult):
+                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @PatchMapping("/api/articles/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody ArticleDTO dto){
+        articleService.update(id , dto);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
 }
